@@ -38,6 +38,7 @@ cask "roachnet" do
       "installPath" => install_root,
       "installedAppPath" => app_path,
       "storagePath" => storage_path,
+      "installProfile" => "homebrew-cask",
       "useDockerContainerization" => false,
       "installRoachClaw" => true,
       "companionEnabled" => false,
@@ -53,6 +54,9 @@ cask "roachnet" do
       "autoLaunch" => true,
       "releaseChannel" => "stable",
       "setupCompletedAt" => timestamp,
+      "bootstrapPending" => true,
+      "bootstrapFailureCount" => 0,
+      "lastRuntimeHealthAt" => nil,
       "pendingLaunchIntro" => false,
       "pendingRoachClawSetup" => true,
     }
