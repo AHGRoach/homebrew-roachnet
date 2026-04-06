@@ -56,16 +56,12 @@ cask "roachnet" do
       "pendingRoachClawSetup" => true,
     }
 
-    File.write(
-      "/tmp/roachnet-homebrew-postflight.log",
-      "home=#{Dir.home}\nconfig_path=#{config_path}\nlegacy_config_path=#{legacy_config_path}\n",
-      mode: "a"
-    )
     FileUtils.mkdir_p(support_root)
     FileUtils.mkdir_p(storage_path)
     FileUtils.mkdir_p(local_bin_path)
     File.write(config_path, "#{JSON.pretty_generate(config)}\n")
     File.write(legacy_config_path, "#{JSON.pretty_generate(config)}\n")
+    system "/usr/bin/xattr", "-dr", "com.apple.quarantine", app_path
   end
 
   zap trash: [
