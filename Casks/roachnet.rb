@@ -1,6 +1,6 @@
 cask "roachnet" do
-  version "1.0.4"
-  sha256 "1caf54cec6d475aa018afc0b8bbeafd71e0bce48c73bc09b3d449686b508ed03"
+  version "1.0.5"
+  sha256 "628772cdbbf690efb47fe2fddde4bbe0e1ac93910b251df7048c0bf8082c06aa"
 
   url "https://github.com/AHGRoach/RoachNet/releases/download/v#{version}/RoachNet-Setup-macOS.dmg",
       verified: "github.com/AHGRoach/RoachNet/"
