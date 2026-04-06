@@ -21,6 +21,7 @@ cask "roachnet" do
 
   postflight do
     require "json"
+    require "shellwords"
     require "securerandom"
     require "time"
 
@@ -61,7 +62,7 @@ cask "roachnet" do
     FileUtils.mkdir_p(local_bin_path)
     File.write(config_path, "#{JSON.pretty_generate(config)}\n")
     File.write(legacy_config_path, "#{JSON.pretty_generate(config)}\n")
-    system "/usr/bin/xattr", "-dr", "com.apple.quarantine", app_path
+    system "/bin/sh", "-c", "/usr/bin/xattr -dr com.apple.quarantine #{Shellwords.escape(app_path)} >/dev/null 2>&1"
   end
 
   zap trash: [
