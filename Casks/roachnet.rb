@@ -1,6 +1,6 @@
 cask "roachnet" do
-  version "1.0.3"
-  sha256 "66697df3bf24eac675f6d87b17ab2cb991d8defed8cf88ea4da9c4158343b975"
+  version "1.0.4"
+  sha256 "2f30d11248e0bde16a8b54019adf5f8314d1735c6c0d4eeac26c6d75c60cc600"
 
   url "https://github.com/AHGRoach/RoachNet/releases/download/v#{version}/RoachNet-Setup-macOS.dmg",
       verified: "github.com/AHGRoach/RoachNet/"
@@ -40,8 +40,8 @@ cask "roachnet" do
       "storagePath" => storage_path,
       "useDockerContainerization" => false,
       "installRoachClaw" => true,
-      "companionEnabled" => true,
-      "companionHost" => "0.0.0.0",
+      "companionEnabled" => false,
+      "companionHost" => "127.0.0.1",
       "companionPort" => 38111,
       "companionToken" => SecureRandom.hex(32),
       "companionAdvertisedURL" => "",
@@ -53,7 +53,7 @@ cask "roachnet" do
       "autoLaunch" => true,
       "releaseChannel" => "stable",
       "setupCompletedAt" => timestamp,
-      "pendingLaunchIntro" => true,
+      "pendingLaunchIntro" => false,
       "pendingRoachClawSetup" => true,
     }
 
@@ -62,7 +62,7 @@ cask "roachnet" do
     FileUtils.mkdir_p(local_bin_path)
     File.write(config_path, "#{JSON.pretty_generate(config)}\n")
     File.write(legacy_config_path, "#{JSON.pretty_generate(config)}\n")
-    system "/bin/sh", "-c", "/usr/bin/xattr -dr com.apple.quarantine #{Shellwords.escape(app_path)} >/dev/null 2>&1"
+    system "/bin/sh", "-c", "/usr/bin/xattr -cr #{Shellwords.escape(app_path)} >/dev/null 2>&1 || true"
   end
 
   zap trash: [
