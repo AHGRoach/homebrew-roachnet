@@ -32,6 +32,8 @@ cask "roachnet" do
     support_root = File.join(Dir.home, "Library", "Application Support", "roachnet")
     config_path = File.join(support_root, "roachnet-installer.json")
     legacy_config_path = File.join(Dir.home, ".roachnet-setup.json")
+    embedded_node = File.join(app_path, "Contents", "Resources", "EmbeddedRuntime", "node", "bin", "node")
+    roachtail_alias_installer = File.join(app_path, "Contents", "Resources", "RoachNetSource", "scripts", "install-roachtail-hostname.mjs")
     timestamp = Time.now.utc.iso8601
 
     config = {
@@ -66,7 +68,18 @@ cask "roachnet" do
     FileUtils.mkdir_p(local_bin_path)
     File.write(config_path, "#{JSON.pretty_generate(config)}\n")
     File.write(legacy_config_path, "#{JSON.pretty_generate(config)}\n")
-    system "/bin/sh", "-c", "/usr/bin/xattr -cr #{Shellwords.escape(app_path)} >/dev/null 2>&1 || true"
+    system "/bin/sh", "-c", "/usr/bin/xattr -d com.apple.quarantine #{Shellwords.escape(app_path)} >/dev/null 2>&1 || true"
+    system "/bin/sh", "-c", "/usr/bin/xattr -d com.apple.provenance #{Shellwords.escape(app_path)} >/dev/null 2>&1 || true"
+    if File.exist?(embedded_node) && File.exist?(roachtail_alias_installer)
+      system(
+        {
+          "ROACHNET_LOCAL_HOSTNAME" => "RoachNet",
+        },
+        embedded_node,
+        roachtail_alias_installer,
+        "--interactive"
+      )
+    end
   end
 
   zap trash: [
