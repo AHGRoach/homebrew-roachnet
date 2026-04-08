@@ -5,8 +5,9 @@ Homebrew tap for installing RoachNet on Apple Silicon Macs.
 ## Install
 
 ```bash
-brew tap AHGRoach/roachnet
-brew install --cask roachnet
+brew update
+brew tap --force AHGRoach/roachnet
+brew install --cask --no-quarantine roachnet
 open ~/RoachNet/app/RoachNet.app
 ```
 
