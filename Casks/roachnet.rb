@@ -1,6 +1,6 @@
 cask "roachnet" do
-  version "1.0.0"
-  sha256 "289e29df34e7ce700f534984bbe6b63178433dad7531304d0e94d9e644ba062b"
+  version "1.0.2"
+  sha256 "e0d8c21525c03927163938c875a9e2ee5fd16b77f13e35b7bb7bce3fd3a1b592"
 
   url "https://github.com/AHGRoach/RoachNet/releases/download/v#{version}/RoachNet-Setup-macOS.dmg",
       verified: "github.com/AHGRoach/RoachNet/"
@@ -16,7 +16,7 @@ cask "roachnet" do
   depends_on arch: :arm64
   depends_on macos: ">= :sonoma"
 
-  app "RoachNet Setup.app/Contents/Resources/InstallerAssets/RoachNet.app",
+  app "RoachNet.app",
       target: "#{Dir.home}/RoachNet/app/RoachNet.app"
 
   postflight do
@@ -70,6 +70,7 @@ cask "roachnet" do
     File.write(legacy_config_path, "#{JSON.pretty_generate(config)}\n")
     system "/bin/sh", "-c", "/usr/bin/xattr -d com.apple.quarantine #{Shellwords.escape(app_path)} >/dev/null 2>&1 || true"
     system "/bin/sh", "-c", "/usr/bin/xattr -d com.apple.provenance #{Shellwords.escape(app_path)} >/dev/null 2>&1 || true"
+    system "/bin/sh", "-c", "/usr/bin/xattr -cr #{Shellwords.escape(app_path)} >/dev/null 2>&1 || true"
     if File.exist?(embedded_node) && File.exist?(roachtail_alias_installer)
       system(
         {
