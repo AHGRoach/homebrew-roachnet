@@ -1,9 +1,12 @@
 cask "roachnet" do
-  version "1.0.2"
-  sha256 "094bbb6ac0461ae92f010912e99dc6092f89a3c59a5b27dc3ff0c2896a1f3de3"
+  local_dmg = ENV["ROACHNET_CASK_LOCAL_DMG"]
+  local_sha = ENV["ROACHNET_CASK_LOCAL_SHA"]
 
-  url "https://github.com/AHGRoach/RoachNet/releases/download/v#{version}/RoachNet-Setup-macOS.dmg",
-      verified: "github.com/AHGRoach/RoachNet/"
+  version "1.0.2"
+  sha256 local_dmg.to_s.empty? ? "25917b7570bd35037e23450e8eb81e6e1ce7c412924946bba3d0e6f0648ec994" : local_sha
+
+  url local_dmg.to_s.empty? ? "https://github.com/AHGRoach/RoachNet/releases/download/v#{version}/RoachNet-Setup-macOS.dmg" : "file://#{local_dmg}",
+      verified: local_dmg.to_s.empty? ? "github.com/AHGRoach/RoachNet/" : nil
   name "RoachNet"
   desc "Local-first desktop command center for maps, models, dev tools, and your own notes"
   homepage "https://roachnet.org"
