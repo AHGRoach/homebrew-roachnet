@@ -3,7 +3,7 @@ cask "roachnet" do
   local_sha = ENV["ROACHNET_CASK_LOCAL_SHA"]
 
   version "1.0.3"
-  sha256 local_dmg.to_s.empty? ? "8344a2f1e4677c837522217dd4b2ef629ee654d23aaaf91b206e1f847e1758aa" : local_sha
+  sha256 local_dmg.to_s.empty? ? "c0809de18a73761718ab7a46c05f3a31f2c2ff489ca28fa31936d1ed0050b758" : local_sha
 
   url local_dmg.to_s.empty? ? "https://github.com/AHGRoach/RoachNet/releases/download/v#{version}/RoachNet-Setup-macOS.dmg" : "file://#{local_dmg}",
       verified: local_dmg.to_s.empty? ? "github.com/AHGRoach/RoachNet/" : nil
